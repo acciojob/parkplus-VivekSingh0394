@@ -41,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
             user = userRepository3.findById(userId).get();
             // set reservation with user
             reservation.setUser(user);
-            reservation.setPayment(null);
+          //  reservation.setPayment(null);
             parkingLot = parkingLotRepository3.findById(parkingLotId).get();
 
             List<Spot> spotList = parkingLot.getSpotList();
