@@ -41,6 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
             user = userRepository3.findById(userId).get();
             // set reservation with user
             reservation.setUser(user);
+            reservation.setPayment(null);
             parkingLot = parkingLotRepository3.findById(parkingLotId).get();
 
             List<Spot> spotList = parkingLot.getSpotList();
@@ -48,7 +49,9 @@ public class ReservationServiceImpl implements ReservationService {
 
             if (user == null && parkingLot == null) {
                 reservation.setSpot(null);
+
                 reservationRepository3.save(reservation);
+
                 throw new Exception("Cannot make reservation");
             }
             int minimumPrice = Integer.MAX_VALUE;
