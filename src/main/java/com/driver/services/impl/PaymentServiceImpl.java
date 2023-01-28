@@ -72,9 +72,9 @@ public class PaymentServiceImpl implements PaymentService {
             // need to free spot
             Spot spot = reservation.getSpot();
             spot.setOccupied(false);
-            spotRepository.save(spot);
+          //  spotRepository.save(spot);
             reservationRepository2.save(reservation);
-          paymentRepository2.save(payment);
+         // paymentRepository2.save(payment);
             return payment;
         }catch (Exception e)
         {
