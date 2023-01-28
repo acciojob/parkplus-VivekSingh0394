@@ -41,17 +41,17 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         spot.setOccupied(false);
         spot.setParkingLot(parkingLot);
 
-        if (numberOfWheels == 2) {
-
-            spot.setSpotType(SpotType.TWO_WHEELER);
-        }
-        else if (numberOfWheels == 4) {
+        if (numberOfWheels > 2) {
 
             spot.setSpotType(SpotType.FOUR_WHEELER);
         }
-           else if (numberOfWheels > 4) {
+        else if (numberOfWheels > 4) {
 
-                spot.setSpotType(SpotType.OTHERS);
+            spot.setSpotType(SpotType.OTHERS);
+        }
+           else  {
+
+                spot.setSpotType(SpotType.TWO_WHEELER);
             }
 
             List<Spot> spotList = parkingLot.getSpotList();
