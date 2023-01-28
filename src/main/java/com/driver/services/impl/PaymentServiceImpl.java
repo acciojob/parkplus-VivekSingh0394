@@ -31,13 +31,12 @@ public class PaymentServiceImpl implements PaymentService {
         try{
             Payment payment = new Payment();
             Reservation reservation = reservationRepository2.findById(reservationId).get();
-
-
-            if(!mode.equalsIgnoreCase("CASH") || !mode.equalsIgnoreCase("CARD")|| !mode.equalsIgnoreCase("UPI"))
+     if(!mode.equalsIgnoreCase("CASH") || !mode.equalsIgnoreCase("CARD")|| !mode.equalsIgnoreCase("UPI"))
             {
                 payment.setPaymentCompleted(false);
                 payment.setReservation(reservation);
                 reservation.setPayment(payment);
+                reservationRepository2.save(reservation);
                 paymentRepository2.save(payment);
                 throw new Exception("Payment mode not detected");
 
@@ -49,6 +48,7 @@ public class PaymentServiceImpl implements PaymentService {
                 payment.setPaymentCompleted(false);
                 payment.setReservation(reservation);
                 reservation.setPayment(payment);
+                reservationRepository2.save(reservation);
                 paymentRepository2.save(payment);
                 throw new Exception("Insufficient Amount");
             }
@@ -74,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
            // spot.setOccupied(false);
           //  spotRepository.save(spot);
             reservationRepository2.save(reservation);
-         // paymentRepository2.save(payment);
+         //paymentRepository2.save(payment);
             return payment;
         }catch (Exception e)
         {
