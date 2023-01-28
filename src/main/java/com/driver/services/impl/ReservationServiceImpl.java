@@ -32,17 +32,21 @@ public class ReservationServiceImpl implements ReservationService {
         // in a spot with a type that is equal to or larger than the given vehicle.
         //In the event that the parking lot is not found, the user is not found or no spot is available,
         // the system should throw an exception indicating that the reservation cannot be made.
-
+        Reservation reservation = new Reservation();
         User user = null;
         ParkingLot parkingLot = null;
         user = userRepository3.findById(userId).get();
+        // set reservation with user
+        reservation.setUser(user);
         parkingLot = parkingLotRepository3.findById(parkingLotId).get();
+
          List<Spot> spotList = parkingLot.getSpotList();
 
 
 
         if(user == null && parkingLot == null)
         {
+            reservation.setSpot(null);
          throw new Exception("Cannot make reservation");
         }
         int minimumPrice=Integer.MAX_VALUE;
@@ -63,13 +67,14 @@ public class ReservationServiceImpl implements ReservationService {
         }
         if(spotReq == null)
         {
+            reservation.setSpot(null);
             throw new Exception("Cannot make reservation");
         }
-        Reservation reservation = new Reservation();
+
         // set attributes of reservation
         reservation.setNumberOfHours(timeInHours);
         reservation.setSpot(spotReq);
-        reservation.setUser(user);
+
         // set user attributes
         List<Reservation> reservationList = user.getReservationList();
         if(reservationList == null)
