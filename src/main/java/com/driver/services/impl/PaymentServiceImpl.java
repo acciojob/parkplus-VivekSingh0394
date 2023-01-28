@@ -36,6 +36,8 @@ public class PaymentServiceImpl implements PaymentService {
             if(!mode.equals("CASH") || !mode.equals("CARD")|| !mode.equals("UPI"))
             {
                 payment.setPaymentCompleted(false);
+                payment.setReservation(reservation);
+                reservation.setPayment(payment);
                 paymentRepository2.save(payment);
                 throw new Exception("Payment mode not detected");
 
@@ -45,6 +47,8 @@ public class PaymentServiceImpl implements PaymentService {
             if(amountSent < bill)
             {
                 payment.setPaymentCompleted(false);
+                payment.setReservation(reservation);
+                reservation.setPayment(payment);
                 paymentRepository2.save(payment);
                 throw new Exception("Insufficient Amount");
             }
@@ -70,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
             spot.setOccupied(false);
             spotRepository.save(spot);
             reservationRepository2.save(reservation);
-          //  paymentRepository2.save(payment);
+          paymentRepository2.save(payment);
             return payment;
         }catch (Exception e)
         {
