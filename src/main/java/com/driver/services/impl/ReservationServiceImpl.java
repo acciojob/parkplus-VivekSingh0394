@@ -47,6 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
         if(user == null && parkingLot == null)
         {
             reservation.setSpot(null);
+            reservationRepository3.save(reservation);
          throw new Exception("Cannot make reservation");
         }
         int minimumPrice=Integer.MAX_VALUE;
@@ -68,6 +69,7 @@ public class ReservationServiceImpl implements ReservationService {
         if(spotReq == null)
         {
             reservation.setSpot(null);
+            reservationRepository3.save(reservation);
             throw new Exception("Cannot make reservation");
         }
 
