@@ -32,8 +32,8 @@ public class PaymentServiceImpl implements PaymentService {
             Payment payment = new Payment();
             Reservation reservation = reservationRepository2.findById(reservationId).get();
 
-            mode = mode.toUpperCase();
-            if(!mode.equals("CASH") || !mode.equals("CARD")|| !mode.equals("UPI"))
+
+            if(!mode.equalsIgnoreCase("CASH") || !mode.equalsIgnoreCase("CARD")|| !mode.equalsIgnoreCase("UPI"))
             {
                 payment.setPaymentCompleted(false);
                 payment.setReservation(reservation);
@@ -53,14 +53,14 @@ public class PaymentServiceImpl implements PaymentService {
                 throw new Exception("Insufficient Amount");
             }
             // set payment attributes
-            if(mode.equals("CASH"))
+            if(mode.equalsIgnoreCase("CASH"))
             {
                 payment.setPaymentMode(PaymentMode.CASH);
             }
-            else if (mode.equals("CARD"))
+            else if (mode.equalsIgnoreCase("CARD"))
             {
                 payment.setPaymentMode(PaymentMode.CARD);
-            } else if (mode.equals("UPI")) {
+            } else if (mode.equalsIgnoreCase("UPI")) {
                 payment.setPaymentMode(PaymentMode.UPI);
 
             }
@@ -70,8 +70,8 @@ public class PaymentServiceImpl implements PaymentService {
             reservation.setPayment(payment);
 
             // need to free spot
-            Spot spot = reservation.getSpot();
-            spot.setOccupied(false);
+           // Spot spot = reservation.getSpot();
+           // spot.setOccupied(false);
           //  spotRepository.save(spot);
             reservationRepository2.save(reservation);
          // paymentRepository2.save(payment);
