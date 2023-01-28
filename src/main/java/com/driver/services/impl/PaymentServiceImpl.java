@@ -33,11 +33,11 @@ public class PaymentServiceImpl implements PaymentService {
             Reservation reservation = reservationRepository2.findById(reservationId).get();
      if(!mode.equalsIgnoreCase("CASH") || !mode.equalsIgnoreCase("CARD")|| !mode.equalsIgnoreCase("UPI"))
             {
-                payment.setPaymentCompleted(false);
-                payment.setReservation(reservation);
-                reservation.setPayment(payment);
-                reservationRepository2.save(reservation);
-                paymentRepository2.save(payment);
+//                payment.setPaymentCompleted(false);
+//                payment.setReservation(reservation);
+//                reservation.setPayment(payment);
+//                reservationRepository2.save(reservation);
+//                paymentRepository2.save(payment);
                 throw new Exception("Payment mode not detected");
 
             }
@@ -45,11 +45,11 @@ public class PaymentServiceImpl implements PaymentService {
             int bill = reservation.getNumberOfHours()*price;
             if(amountSent < bill)
             {
-                payment.setPaymentCompleted(false);
-                payment.setReservation(reservation);
-                reservation.setPayment(payment);
-                reservationRepository2.save(reservation);
-                paymentRepository2.save(payment);
+//                payment.setPaymentCompleted(false);
+//                payment.setReservation(reservation);
+//                reservation.setPayment(payment);
+//                reservationRepository2.save(reservation);
+//                paymentRepository2.save(payment);
                 throw new Exception("Insufficient Amount");
             }
             // set payment attributes
@@ -73,7 +73,7 @@ public class PaymentServiceImpl implements PaymentService {
            // Spot spot = reservation.getSpot();
            // spot.setOccupied(false);
           //  spotRepository.save(spot);
-           // reservationRepository2.save(reservation);
+           reservationRepository2.save(reservation);
          paymentRepository2.save(payment);
             return payment;
         }catch (Exception e)
