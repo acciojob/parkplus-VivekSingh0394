@@ -28,30 +28,23 @@ public class PaymentServiceImpl implements PaymentService {
         //        //If the mode contains a string other than "cash", "card", or "upi"
         //        (any character in uppercase or lowercase), throw "Payment mode not detected" exception.
         //        //Note that the reservationId always exists
-        try{
+
             Payment payment = new Payment();
             Reservation reservation = reservationRepository2.findById(reservationId).get();
-     if(!mode.equalsIgnoreCase("CASH") || !mode.equalsIgnoreCase("CARD")|| !mode.equalsIgnoreCase("UPI"))
+        int price = reservation.getSpot().getPricePerHour();
+        int bill = reservation.getNumberOfHours()*price;
+        if(amountSent < bill)
+        {
+//            payment.setPaymentCompleted(false);
+//            payment.setReservation(reservation);
+//            reservation.setPayment(payment);
+//            reservationRepository2.save(reservation);
+//            paymentRepository2.save(payment);
+            throw new Exception("Insufficient Amount");
+        }
+     if(mode.equalsIgnoreCase("CASH") || mode.equalsIgnoreCase("CARD")|| mode.equalsIgnoreCase("UPI"))
             {
-//                payment.setPaymentCompleted(false);
-//                payment.setReservation(reservation);
-//                reservation.setPayment(payment);
-//                reservationRepository2.save(reservation);
-//                paymentRepository2.save(payment);
-                throw new Exception("Payment mode not detected");
 
-            }
-            int price = reservation.getSpot().getPricePerHour();
-            int bill = reservation.getNumberOfHours()*price;
-            if(amountSent < bill)
-            {
-//                payment.setPaymentCompleted(false);
-//                payment.setReservation(reservation);
-//                reservation.setPayment(payment);
-//                reservationRepository2.save(reservation);
-//                paymentRepository2.save(payment);
-                throw new Exception("Insufficient Amount");
-            }
             // set payment attributes
             if(mode.equalsIgnoreCase("CASH"))
             {
@@ -74,12 +67,13 @@ public class PaymentServiceImpl implements PaymentService {
            // spot.setOccupied(false);
           //  spotRepository.save(spot);
            reservationRepository2.save(reservation);
-         paymentRepository2.save(payment);
+        // paymentRepository2.save(payment);
             return payment;
-        }catch (Exception e)
-        {
-            return null;
         }
+     else
+     {
+         throw new Exception("Payment mode not detected");
+     }
 
 
     }
